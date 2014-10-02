@@ -2,6 +2,7 @@ package crazypants.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.Vec3Pool;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.util.ForgeDirection;
@@ -71,5 +72,11 @@ public class IBlockAccessWrapper implements IBlockAccess {
   public boolean extendedLevelsInChunkCache() {
     return wrapped.extendedLevelsInChunkCache();
   }
+
+@Override
+public Vec3Pool getWorldVec3Pool() {
+	// TODO Auto-generated method stub
+	return null;
+}
 
 }

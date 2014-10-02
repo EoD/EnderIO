@@ -41,9 +41,9 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
     super(ModObject.blockVacuumChest.unlocalisedName, TileVacuumChest.class);
     setBlockTextureName("enderio:blockVacuumChest");
   }
-  
+
   @Override
-  protected void init() {  
+  protected void init() {
     super.init();
     EnderIO.guiHandler.registerGuiHandler(GuiHandler.GUI_ID_VACUUM_CHEST, this);
   }
@@ -55,13 +55,13 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
       if(entityPlayer.isSneaking() && entityPlayer.getCurrentEquippedItem().getItem() instanceof IToolWrench) {
         IToolWrench wrench = (IToolWrench) entityPlayer.getCurrentEquippedItem().getItem();
         if(wrench.canWrench(entityPlayer, x, y, z)) {
-          removedByPlayer(world, entityPlayer, x, y, z, false);
+          removedByPlayer(world, entityPlayer, x, y, z);
           if(entityPlayer.getCurrentEquippedItem().getItem() instanceof IToolWrench) {
             ((IToolWrench) entityPlayer.getCurrentEquippedItem().getItem()).wrenchUsed(entityPlayer, x, y, z);
           }
           return true;
         }
-      } 
+      }
     }
     if(entityPlayer.isSneaking()) {
       return false;
@@ -71,15 +71,15 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
     }
     return true;
   }
-  
+
   @Override
-  public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z, boolean harvested) {
+  public boolean removedByPlayer(World world, EntityPlayer player, int x, int y, int z) {
     if(!world.isRemote) {
       TileEntity te = world.getTileEntity(x, y, z);
       if(te instanceof TileVacuumChest) {
         TileVacuumChest cb = (TileVacuumChest) te;
         if(!player.capabilities.isCreativeMode || "true".equalsIgnoreCase(System.getProperty("blockCapBankAllwaysDrop"))) {
-          ItemStack itemStack = createItemStackWithInventory(cb);          
+          ItemStack itemStack = createItemStackWithInventory(cb);
           float f = 0.7F;
           double d0 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
           double d1 = world.rand.nextFloat() * f + (1.0F - f) * 0.5D;
@@ -90,11 +90,11 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
         }
       }
     }
-    return super.removedByPlayer(world, player, x, y, z, harvested);
+    return super.removedByPlayer(world, player, x, y, z);
   }
 
   @Override
-  public int quantityDropped(Random p_149745_1_) {    
+  public int quantityDropped(Random p_149745_1_) {
     return 0;
   }
 
@@ -109,7 +109,7 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
   public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase placedBy, ItemStack stack) {
     if(!world.isRemote) {
       TileEntity te = world.getTileEntity(x, y, z);
-      if(stack != null && stack.stackTagCompound != null && te instanceof TileVacuumChest) {  
+      if(stack != null && stack.stackTagCompound != null && te instanceof TileVacuumChest) {
         ((TileVacuumChest)te).readContentsFromNBT(stack.stackTagCompound);
         world.markBlockForUpdate(x, y, z);
       }
@@ -117,7 +117,7 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
   }
 
   @Override
-  public int getRenderType() {    
+  public int getRenderType() {
     return renderId;
   }
 
@@ -144,7 +144,8 @@ public class BlockVacuumChest extends BlockEio implements IGuiHandler, IResource
     return null;
   }
 
-  public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
+  @Override
+public void breakBlock(World world, int x, int y, int z, Block block, int p_149749_6_) {
     super.breakBlock(world, x, y, z, block, p_149749_6_);
     world.removeTileEntity(x, y, z);
   }

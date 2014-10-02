@@ -18,7 +18,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemSkull;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTUtil;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntitySkull;
 import net.minecraft.util.IIcon;
@@ -67,28 +66,32 @@ public class BlockEndermanSkull extends BlockEio {
     return sideIcon;
   }
 
-  public int getRenderType() {
+  @Override
+public int getRenderType() {
     return renderId;
   }
 
-  public boolean isOpaqueCube() {
+  @Override
+public boolean isOpaqueCube() {
     return false;
   }
 
-  public boolean renderAsNormalBlock() {
+  @Override
+public boolean renderAsNormalBlock() {
     return false;
   }
 
-  @SideOnly(Side.CLIENT)
+  @Override
+@SideOnly(Side.CLIENT)
   public String getItemIconName() {
     return "enderio:endermanSkull";
   }
 
   @Override
   public void onBlockPlacedBy(World world, int x, int y, int z, EntityLivingBase player, ItemStack stack) {
-    
+
     int inc = MathHelper.floor_double((double)(player.rotationYaw * 16.0F / 360.0F) + 0.5D) & 15;
-    float facingYaw = -22.5f * inc;   
+    float facingYaw = -22.5f * inc;
     TileEndermanSkull te = (TileEndermanSkull) world.getTileEntity(x, y, z);
     te.setYaw(facingYaw);
     if(world.isRemote) {

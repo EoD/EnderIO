@@ -343,7 +343,12 @@ public class TileKillerJoe extends AbstractMachineEntity implements IFluidHandle
     if(weaponStack == null) {
       return 0;
     }
-    return EnchantmentHelper.func_152377_a(weaponStack, ent.getCreatureAttribute());
+
+    // return EnchantmentHelper.func_152377_a(weaponStack, ent.getCreatureAttribute());
+	// EnchantmentHelper.func_152377_a does not yet exist in 1.7.2 and
+	// using EnchantmentHelper.getEnchantmentModifierLiving() is hard to
+	// implement here
+    return 0;
   }
 
   private float getBaseDamage() {
@@ -448,11 +453,13 @@ public class TileKillerJoe extends AbstractMachineEntity implements IFluidHandle
 
   //------------------------------- Power
 
-  public PowerReceiver getPowerReceiver(ForgeDirection side) {
+  @Override
+public PowerReceiver getPowerReceiver(ForgeDirection side) {
     return null;
   }
 
-  public boolean canConnectEnergy(ForgeDirection from) {
+  @Override
+public boolean canConnectEnergy(ForgeDirection from) {
     return false;
   }
 
