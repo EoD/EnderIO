@@ -125,7 +125,7 @@ public class IoConfigRenderer {
     }
 
     world = mc.thePlayer.worldObj;
-    RB.blockAccess = new InnerBA();    
+    RB.blockAccess = new InnerBA();
   }
 
   public void init() {
@@ -265,7 +265,7 @@ public class IoConfigRenderer {
 
   private void renderOverlay(int mx, int my) {
     Rectangle vp = camera.getViewport();
-    ScaledResolution scaledresolution = new ScaledResolution(mc, mc.displayWidth, mc.displayHeight);
+    ScaledResolution scaledresolution = new ScaledResolution(mc.gameSettings, mc.displayWidth, mc.displayHeight);
 
     int vpx = vp.x / scaledresolution.getScaleFactor();
     int vph = vp.height / scaledresolution.getScaleFactor();
